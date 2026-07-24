@@ -374,6 +374,136 @@
     background:var(--teal);
   }
 
+  /* ---------- Confirm-ride sunny drive animation ---------- */
+  .ride-loading-overlay{
+    position:fixed;
+    inset:0;
+    z-index:999;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(180deg, #ffcf70 0%, #ffb84d 35%, #ff9d5c 65%, #f2814f 100%);
+    overflow:hidden;
+  }
+  .ride-loading-overlay.visible{
+    display:flex;
+    animation:overlayFadeIn .35s ease;
+  }
+  @keyframes overlayFadeIn{
+    from{opacity:0;}
+    to{opacity:1;}
+  }
+  .rlo-scene{
+    position:relative;
+    width:100%;
+    height:100%;
+    max-width:520px;
+  }
+  .rlo-sun{
+    position:absolute;
+    top:14%;
+    left:50%;
+    transform:translateX(-50%);
+    width:86px;
+    height:86px;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 35%, #fff6d6, #ffd447 60%, #ffb020 100%);
+    box-shadow:0 0 60px 18px rgba(255,214,71,0.55);
+    animation:sunPulse 2.4s ease-in-out infinite;
+  }
+  @keyframes sunPulse{
+    0%,100%{ transform:translateX(-50%) scale(1); }
+    50%{ transform:translateX(-50%) scale(1.06); }
+  }
+  .rlo-cloud{
+    position:absolute;
+    background:rgba(255,255,255,0.75);
+    border-radius:50px;
+    filter:blur(0.3px);
+  }
+  .rlo-cloud::before, .rlo-cloud::after{
+    content:"";
+    position:absolute;
+    background:rgba(255,255,255,0.75);
+    border-radius:50%;
+  }
+  .rlo-cloud1{ width:70px; height:24px; top:22%; left:-20%; animation:cloudDrift 7s linear infinite; }
+  .rlo-cloud1::before{ width:34px; height:34px; top:-16px; left:8px; }
+  .rlo-cloud1::after{ width:26px; height:26px; top:-10px; left:36px; }
+  .rlo-cloud2{ width:54px; height:18px; top:34%; left:-25%; animation:cloudDrift 9.5s linear infinite; animation-delay:1.5s; }
+  .rlo-cloud2::before{ width:26px; height:26px; top:-12px; left:6px; }
+  .rlo-cloud2::after{ width:20px; height:20px; top:-8px; left:26px; }
+  @keyframes cloudDrift{
+    from{ transform:translateX(0); }
+    to{ transform:translateX(650px); }
+  }
+  .rlo-road{
+    position:absolute;
+    bottom:32%;
+    left:0;
+    width:100%;
+    height:10px;
+    background:#3a3550;
+    border-radius:6px;
+  }
+  .rlo-road::after{
+    content:"";
+    position:absolute;
+    top:50%;
+    left:0;
+    width:200%;
+    height:3px;
+    transform:translateY(-50%);
+    background-image:repeating-linear-gradient(90deg, #fff 0 20px, transparent 20px 40px);
+    animation:roadLines 0.9s linear infinite;
+  }
+  @keyframes roadLines{
+    from{ transform:translate(0,-50%); }
+    to{ transform:translate(-40px,-50%); }
+  }
+  .rlo-car{
+    position:absolute;
+    bottom:calc(32% + 8px);
+    left:-70px;
+    width:70px;
+    animation:carDrive 1.7s ease-in-out infinite;
+  }
+  @keyframes carDrive{
+    0%{ left:-70px; transform:rotate(0deg); }
+    45%{ transform:rotate(-1deg); }
+    50%{ left:calc(50% - 35px); transform:rotate(1deg); }
+    55%{ transform:rotate(-1deg); }
+    100%{ left:calc(100% + 70px); transform:rotate(0deg); }
+  }
+  .rlo-car svg{ width:100%; height:auto; display:block; filter:drop-shadow(0 6px 6px rgba(0,0,0,0.25)); }
+  .rlo-wheel{ animation:wheelSpin 0.4s linear infinite; transform-origin:center; }
+  @keyframes wheelSpin{
+    from{ transform:rotate(0deg); }
+    to{ transform:rotate(360deg); }
+  }
+  .rlo-text{
+    position:absolute;
+    bottom:14%;
+    left:0;
+    width:100%;
+    text-align:center;
+    color:#3a2a12;
+    font-family:'Segoe UI', 'Trebuchet MS', system-ui, sans-serif;
+    font-weight:700;
+    font-size:17px;
+    letter-spacing:0.02em;
+  }
+  .rlo-text .dots span{
+    animation:dotBlink 1.2s infinite;
+    opacity:0;
+  }
+  .rlo-text .dots span:nth-child(2){ animation-delay:0.2s; }
+  .rlo-text .dots span:nth-child(3){ animation-delay:0.4s; }
+  @keyframes dotBlink{
+    0%,100%{ opacity:0; }
+    50%{ opacity:1; }
+  }
+
   /* ---- confirmation screen ---- */
   .success-mark{
     width:64px;height:64px;border-radius:50%;
@@ -791,6 +921,29 @@
     </section>
 
   </main>
+</div>
+
+<div class="ride-loading-overlay" id="rideLoadingOverlay">
+  <div class="rlo-scene">
+    <div class="rlo-sun"></div>
+    <div class="rlo-cloud rlo-cloud1"></div>
+    <div class="rlo-cloud rlo-cloud2"></div>
+    <div class="rlo-road"></div>
+    <div class="rlo-car">
+      <svg viewBox="0 0 200 90" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14 62 Q14 40 34 36 L58 36 Q68 20 88 20 L128 20 Q146 20 154 36 L172 36 Q188 38 188 56 L188 62 Z"
+              fill="#F2A93B" stroke="#c9822a" stroke-width="2"/>
+        <path d="M66 36 L78 22 L120 22 L134 36 Z" fill="#bfe9ff" stroke="#c9822a" stroke-width="1.5"/>
+        <circle class="rlo-wheel" cx="50" cy="64" r="14" fill="#26232e"/>
+        <circle cx="50" cy="64" r="5.5" fill="#cfcfd6"/>
+        <circle class="rlo-wheel" cx="150" cy="64" r="14" fill="#26232e"/>
+        <circle cx="150" cy="64" r="5.5" fill="#cfcfd6"/>
+        <circle cx="182" cy="46" r="4" fill="#fff6d6"/>
+        <circle cx="16" cy="50" r="3" fill="#ff5c5c"/>
+      </svg>
+    </div>
+    <div class="rlo-text">Confirming your ride<span class="dots"><span>.</span><span>.</span><span>.</span></span></div>
+  </div>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -1234,6 +1387,8 @@
     toStep3Btn.disabled = true;
   }
 
+  var rideLoadingOverlay = document.getElementById("rideLoadingOverlay");
+
   toStep3Btn.addEventListener("click", function(){
     if(!state.selectedCar || !state.paymentMethod) return;
     var car = state.selectedCar;
@@ -1257,7 +1412,12 @@
     document.getElementById("farePayment").textContent = paymentNames[state.paymentMethod] || "—";
     document.getElementById("fareTotal").textContent = fmtRupee(car._price);
 
-    goToScreen(5);
+    // play the sunny drive animation, then reveal the confirmation screen
+    rideLoadingOverlay.classList.add("visible");
+    setTimeout(function(){
+      rideLoadingOverlay.classList.remove("visible");
+      goToScreen(5);
+    }, 1800);
   });
 
   document.getElementById("bookAnother").addEventListener("click", function(){

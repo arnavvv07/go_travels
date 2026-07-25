@@ -26,8 +26,8 @@
     --surface: #121A2C;
     --surface-2: #182238;
     --line: #263049;
-    --amber: #F2A93B;
-    --teal: #3FD6C4;
+    --amber: #FF8A3D;
+    --teal: #2F8FE0;
     --text: #EDEFF5;
     --muted: #8A94AA;
     --danger: #E8607A;
@@ -36,8 +36,8 @@
   html,body{height:100%;}
   body{
     background:
-      radial-gradient(600px 300px at 15% -5%, rgba(242,169,59,0.10), transparent 60%),
-      radial-gradient(700px 400px at 100% 0%, rgba(63,214,196,0.08), transparent 60%),
+      radial-gradient(600px 300px at 15% -5%, rgba(255,138,61,0.11), transparent 60%),
+      radial-gradient(700px 400px at 100% 0%, rgba(47,143,224,0.13), transparent 60%),
       var(--bg);
     color:var(--text);
     font-family:system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -64,19 +64,38 @@
   .brand{
     display:flex;
     align-items:center;
-    gap:10px;
+    gap:11px;
+  }
+  .brand-text{
+    display:flex;
+    flex-direction:column;
+    line-height:1.2;
+  }
+  .brand-name{
     font-family:'Segoe UI', 'Trebuchet MS', system-ui, sans-serif;
     font-weight:700;
-    font-size:20px;
+    font-size:19px;
     letter-spacing:0.2px;
+    background:linear-gradient(100deg, var(--teal) 0%, #6FB8FF 35%, var(--amber) 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .brand-tagline{
+    font-size:9.5px;
+    font-weight:600;
+    letter-spacing:0.09em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-top:1px;
   }
   .brand-mark{
-    width:30px;height:30px;border-radius:8px;
-    background:linear-gradient(140deg, var(--amber), #c97f1f);
+    width:38px;height:38px;
     display:flex;align-items:center;justify-content:center;
-    box-shadow:0 0 0 1px rgba(255,255,255,0.06), 0 6px 14px rgba(242,169,59,0.25);
+    flex-shrink:0;
+    filter:drop-shadow(0 4px 10px rgba(46,139,255,0.30)) drop-shadow(0 2px 8px rgba(255,138,61,0.20));
   }
-  .brand-mark svg{width:16px;height:16px;}
+  .brand-mark img{width:100%;height:100%;object-fit:contain;}
   .step-dots{display:flex; gap:6px;}
   .step-dots span{
     width:7px;height:7px;border-radius:50%;
@@ -132,14 +151,36 @@
   h1.page-title{
     font-family:'Segoe UI', 'Trebuchet MS', system-ui, sans-serif;
     font-weight:600;
-    font-size:26px;
-    line-height:1.25;
-    margin-bottom:6px;
+    font-size:28px;
+    line-height:1.22;
+    letter-spacing:-0.2px;
+    margin-bottom:8px;
+  }
+  .grad-text{
+    background:linear-gradient(100deg, #FFE1A8 0%, var(--amber) 45%, var(--teal) 130%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .hero-logo{
+    display:block;
+    width:min(78%, 300px);
+    margin:6px auto 4px;
+    filter:drop-shadow(0 10px 26px rgba(46,139,255,0.22)) drop-shadow(0 6px 18px rgba(255,138,61,0.18));
+  }
+  .hero-tagline{
+    text-align:center;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--amber);
+    margin-bottom:22px;
   }
   p.page-sub{
     color:var(--muted);
     font-size:14px;
-    margin-bottom:22px;
+    margin-bottom:26px;
   }
 
   /* ---- Route visual (signature element) ---- */
@@ -236,7 +277,7 @@
 
   .btn-primary{
     margin-top:auto;
-    background:var(--amber);
+    background:linear-gradient(135deg, #FFDD97, var(--amber) 55%, #E1932F);
     color:#1a1206;
     border:none;
     font-family:'Segoe UI', 'Trebuchet MS', system-ui, sans-serif;
@@ -250,7 +291,11 @@
     justify-content:center;
     gap:8px;
     transition:transform .15s ease, box-shadow .15s ease, opacity .2s ease;
-    box-shadow:0 8px 20px rgba(242,169,59,0.18);
+    box-shadow:0 10px 24px rgba(242,169,59,0.28);
+  }
+  .btn-primary:hover:not(:disabled){
+    transform:translateY(-1px);
+    box-shadow:0 12px 28px rgba(242,169,59,0.36);
   }
   .btn-primary:disabled{
     opacity:0.35;
@@ -373,6 +418,34 @@
     border-color:var(--teal);
     background:var(--teal);
   }
+
+  .suggest-list{
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    z-index:40;
+    margin-top:4px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:12px;
+    overflow:hidden;
+    display:none;
+    box-shadow:0 10px 30px rgba(0,0,0,0.35);
+  }
+  .suggest-list.visible{display:block;}
+  .suggest-item{
+    padding:10px 12px;
+    font-size:12.5px;
+    color:var(--text);
+    cursor:pointer;
+    border-bottom:1px solid var(--line);
+  }
+  .suggest-item:last-child{border-bottom:none;}
+  .suggest-item:hover, .suggest-item.active{background:rgba(63,214,196,0.10);}
+  .suggest-item .s-main{display:block; color:var(--text);}
+  .suggest-item .s-sub{display:block; color:var(--muted); font-size:11px; margin-top:1px;}
+  .suggest-empty{padding:10px 12px; font-size:12px; color:var(--muted);}
 
   /* ---------- Confirm-ride sunny drive animation ---------- */
   .ride-loading-overlay{
@@ -573,9 +646,10 @@
     display:flex;
     background:var(--surface);
     border:1px solid var(--line);
-    border-radius:12px;
+    border-radius:13px;
     padding:4px;
-    margin-bottom:22px;
+    margin-bottom:24px;
+    box-shadow:inset 0 1px 2px rgba(0,0,0,0.25);
   }
   .tab-btn{
     flex:1;
@@ -585,21 +659,23 @@
     font-family:'Segoe UI', 'Trebuchet MS', system-ui, sans-serif;
     font-weight:600;
     font-size:13.5px;
-    padding:10px 8px;
-    border-radius:9px;
+    padding:11px 8px;
+    border-radius:10px;
     cursor:pointer;
-    transition:background .2s ease, color .2s ease;
+    transition:background .25s ease, color .25s ease, box-shadow .25s ease;
   }
   .tab-btn.active{
-    background:var(--amber);
+    background:linear-gradient(135deg, #FFD98A, var(--amber) 70%);
     color:#1a1206;
+    box-shadow:0 4px 14px rgba(242,169,59,0.35);
   }
   .auth-card{
-    background:var(--surface);
+    background:linear-gradient(165deg, rgba(255,255,255,0.035), rgba(255,255,255,0) 55%), var(--surface);
     border:1px solid var(--line);
-    border-radius:18px;
-    padding:20px 18px;
-    margin-bottom:18px;
+    border-radius:20px;
+    padding:22px 20px;
+    margin-bottom:20px;
+    box-shadow:0 14px 34px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.03);
   }
   .auth-panel{display:none; flex-direction:column; gap:16px;}
   .auth-panel.active{display:flex;}
@@ -696,9 +772,12 @@
   <header class="topbar">
     <div class="brand">
       <div class="brand-mark">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M4 16l1.6-5.2A2 2 0 0 1 7.5 9.5h9a2 2 0 0 1 1.9 1.3L20 16" stroke="#1a1206" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7.5" cy="17" r="1.6" fill="#1a1206"/><circle cx="16.5" cy="17" r="1.6" fill="#1a1206"/><path d="M4 16h16" stroke="#1a1206" stroke-width="2" stroke-linecap="round"/></svg>
+        <img src="logo-icon.png" alt="go_travels logo">
       </div>
-      <span>go_travels</span>
+      <div class="brand-text">
+        <span class="brand-name">go_travels</span>
+        <span class="brand-tagline">Your Trusted Luxury Travel Partner</span>
+      </div>
     </div>
     <div class="header-right">
       <div class="step-dots">
@@ -718,7 +797,9 @@
 
     <!-- SCREEN 0a: Login / Sign up -->
     <section class="screen" id="screen-login">
-      <h1 class="page-title">Welcome to<br>go_travels</h1>
+      <img src="logo-full.png" alt="go_travels" class="hero-logo">
+      <p class="hero-tagline">Your Trusted Luxury Travel Partner</p>
+      <h1 class="page-title">Welcome to<br><span class="grad-text">Go Travels</span></h1>
       <p class="page-sub">Log in or create an account to book your ride.</p>
 
       <div class="auth-tabs">
@@ -736,7 +817,7 @@
               <input type="tel" id="existingPhone" placeholder="10-digit mobile number" inputmode="numeric" maxlength="10">
             </div>
           </div>
-          <p class="auth-hint">We'll text a one-time code to verify it's you — no password needed.</p>
+          <p class="auth-hint">Enter the mobile number</p>
         </div>
 
         <!-- New user: name + phone -->
@@ -805,13 +886,15 @@
             <div class="dot-drop"></div>
           </div>
           <div class="route-inputs">
-            <div class="field">
+            <div class="field" style="position:relative;">
               <label>Pickup point</label>
-              <input type="text" id="pickup" placeholder="e.g. VIT Chennai, Vandalur">
+              <input type="text" id="pickup" placeholder="e.g. VIT Chennai, Vandalur" autocomplete="off">
+              <div class="suggest-list" id="pickupSuggest"></div>
             </div>
-            <div class="field">
+            <div class="field" style="position:relative;">
               <label>Drop point</label>
-              <input type="text" id="drop" placeholder="e.g. Chennai Central Station">
+              <input type="text" id="drop" placeholder="e.g. Chennai Central Station" autocomplete="off">
+              <div class="suggest-list" id="dropSuggest"></div>
             </div>
           </div>
         </div>
@@ -1041,11 +1124,31 @@
   }
 
   async function geocodePlace(query){
-    var url = "https://nominatim.openstreetmap.org/search?format=json&limit=1&q=" + encodeURIComponent(query);
+    // Bias results to India, and to the Chennai area specifically (viewbox),
+    // so a vague name like "Anna Nagar" doesn't match a place in another
+    // state/country. bounded=1 forces results to stay inside that box when
+    // possible; addressdetails helps us show what was actually matched.
+    var chennaiBox = "79.6,13.35,80.5,12.6"; // left,top,right,bottom around Chennai
+    var url = "https://nominatim.openstreetmap.org/search" +
+      "?format=json&limit=1&addressdetails=1" +
+      "&countrycodes=in" +
+      "&viewbox=" + chennaiBox + "&bounded=1" +
+      "&q=" + encodeURIComponent(query);
     var res = await fetch(url);
     var data = await res.json();
-    if(!data || !data.length) return null;
-    return { lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon) };
+    if(!data || !data.length){
+      // fall back to an unbounded India-wide search in case the place
+      // genuinely isn't near Chennai (e.g. user typed a different city)
+      var url2 = "https://nominatim.openstreetmap.org/search?format=json&limit=1&addressdetails=1&countrycodes=in&q=" + encodeURIComponent(query);
+      var res2 = await fetch(url2);
+      data = await res2.json();
+      if(!data || !data.length) return null;
+    }
+    return {
+      lat: parseFloat(data[0].lat),
+      lng: parseFloat(data[0].lon),
+      matchedName: data[0].display_name
+    };
   }
 
   async function fetchRoute(pickupPoint, dropPoint){
@@ -1064,11 +1167,14 @@
   // Looks up real coordinates + a real driving distance for the pickup/drop text.
   // Falls back to the pseudo-random distance if the location can't be found or the
   // network call fails (e.g. offline), so the app never gets stuck.
-  async function computeRealDistanceAndDrawMap(pickup, drop){
+  async function computeRealDistanceAndDrawMap(pickup, drop, resolvedPickup, resolvedDrop){
     mapStatusEl.textContent = "Locating pickup & drop points…";
     try{
-      var pickupPoint = await geocodePlace(pickup);
-      var dropPoint = await geocodePlace(drop);
+      // If the user picked an exact suggestion for a field, use those precise
+      // coordinates directly instead of re-searching from the typed text —
+      // this is the main fix for pickup/drop landing in the wrong spot.
+      var pickupPoint = resolvedPickup || await geocodePlace(pickup);
+      var dropPoint = resolvedDrop || await geocodePlace(drop);
       if(!pickupPoint || !dropPoint){
         mapStatusEl.textContent = "Couldn't find one of those places — showing an estimate instead.";
         return computeDistance(pickup, drop);
@@ -1090,11 +1196,18 @@
       if(dropMarker) leafletMap.removeLayer(dropMarker);
 
       routeLine = L.polyline(route.coords, { color: "#F2A93B", weight: 4 }).addTo(leafletMap);
-      pickupMarker = L.circleMarker([pickupPoint.lat, pickupPoint.lng], { radius:6, color:"#3FD6C4", fillColor:"#3FD6C4", fillOpacity:1 }).addTo(leafletMap);
-      dropMarker = L.circleMarker([dropPoint.lat, dropPoint.lng], { radius:6, color:"#F2A93B", fillColor:"#F2A93B", fillOpacity:1 }).addTo(leafletMap);
+      pickupMarker = L.circleMarker([pickupPoint.lat, pickupPoint.lng], { radius:6, color:"#3FD6C4", fillColor:"#3FD6C4", fillOpacity:1 })
+        .addTo(leafletMap).bindPopup("Pickup: " + pickupPoint.matchedName);
+      dropMarker = L.circleMarker([dropPoint.lat, dropPoint.lng], { radius:6, color:"#F2A93B", fillColor:"#F2A93B", fillOpacity:1 })
+        .addTo(leafletMap).bindPopup("Drop: " + dropPoint.matchedName);
       leafletMap.fitBounds(routeLine.getBounds(), { padding:[18,18] });
 
-      mapStatusEl.textContent = "Route found — " + route.distanceKm + " km by road.";
+      // Show a short version of what was actually matched, so a wrong pick
+      // (e.g. a same-named place in another area) is obvious immediately.
+      var shortPickup = pickupPoint.matchedName.split(",").slice(0,2).join(",");
+      var shortDrop = dropPoint.matchedName.split(",").slice(0,2).join(",");
+      mapStatusEl.textContent =
+        route.distanceKm + " km by road  •  matched: " + shortPickup + " → " + shortDrop;
       return route.distanceKm;
     }catch(err){
       mapStatusEl.textContent = "Map lookup failed — showing an estimate instead.";
@@ -1269,6 +1382,74 @@
   var toStep2Btn = document.getElementById("toStep2");
   var swapBtn = document.getElementById("swapBtn");
 
+  // Exact coordinates get stored here the moment the user picks a suggestion,
+  // so the distance calculation uses the precise spot they confirmed instead
+  // of re-guessing from typed text later (this is what fixes location mismatches).
+  var resolvedPoints = { pickup: null, drop: null };
+
+  function setupAutocomplete(inputEl, listEl, key){
+    var debounceTimer = null;
+
+    inputEl.addEventListener("input", function(){
+      resolvedPoints[key] = null; // typing again invalidates the previous exact match
+      var query = inputEl.value.trim();
+      clearTimeout(debounceTimer);
+      if(query.length < 3){
+        listEl.classList.remove("visible");
+        listEl.innerHTML = "";
+        return;
+      }
+      debounceTimer = setTimeout(function(){ runSuggestSearch(query, listEl, inputEl, key); }, 350);
+    });
+
+    inputEl.addEventListener("blur", function(){
+      // small delay so a click on a suggestion registers before the list closes
+      setTimeout(function(){ listEl.classList.remove("visible"); }, 150);
+    });
+  }
+
+  async function runSuggestSearch(query, listEl, inputEl, key){
+    try{
+      var chennaiBox = "79.6,13.35,80.5,12.6";
+      var url = "https://nominatim.openstreetmap.org/search" +
+        "?format=json&limit=5&addressdetails=1&countrycodes=in" +
+        "&viewbox=" + chennaiBox + "&bounded=1" +
+        "&q=" + encodeURIComponent(query);
+      var res = await fetch(url);
+      var data = await res.json();
+
+      if(!data || !data.length){
+        listEl.innerHTML = '<div class="suggest-empty">No matches nearby — you can still type the full name and continue.</div>';
+        listEl.classList.add("visible");
+        return;
+      }
+
+      listEl.innerHTML = "";
+      data.forEach(function(place){
+        var parts = place.display_name.split(",");
+        var main = parts[0];
+        var sub = parts.slice(1,3).join(",").trim();
+        var item = document.createElement("div");
+        item.className = "suggest-item";
+        item.innerHTML = '<span class="s-main">' + main + '</span><span class="s-sub">' + sub + '</span>';
+        item.addEventListener("mousedown", function(e){
+          e.preventDefault(); // fires before blur, so it registers
+          inputEl.value = main + ", " + sub;
+          resolvedPoints[key] = { lat: parseFloat(place.lat), lng: parseFloat(place.lon), matchedName: place.display_name };
+          listEl.classList.remove("visible");
+          validateStep1();
+        });
+        listEl.appendChild(item);
+      });
+      listEl.classList.add("visible");
+    }catch(err){
+      listEl.classList.remove("visible");
+    }
+  }
+
+  setupAutocomplete(pickupInput, document.getElementById("pickupSuggest"), "pickup");
+  setupAutocomplete(dropInput, document.getElementById("dropSuggest"), "drop");
+
   function validateStep1(){
     var ok = pickupInput.value.trim().length > 1 && dropInput.value.trim().length > 1 &&
              pickupInput.value.trim().toLowerCase() !== dropInput.value.trim().toLowerCase();
@@ -1281,18 +1462,23 @@
     var tmp = pickupInput.value;
     pickupInput.value = dropInput.value;
     dropInput.value = tmp;
+    var tmpPoint = resolvedPoints.pickup;
+    resolvedPoints.pickup = resolvedPoints.drop;
+    resolvedPoints.drop = tmpPoint;
     validateStep1();
   });
 
   document.querySelectorAll("[data-fill-pickup]").forEach(function(btn){
     btn.addEventListener("click", function(){
       pickupInput.value = btn.getAttribute("data-fill-pickup");
+      resolvedPoints.pickup = null;
       validateStep1();
     });
   });
   document.querySelectorAll("[data-fill-drop]").forEach(function(btn){
     btn.addEventListener("click", function(){
       dropInput.value = btn.getAttribute("data-fill-drop");
+      resolvedPoints.drop = null;
       validateStep1();
     });
   });
@@ -1306,7 +1492,7 @@
     toStep2Btn.disabled = true;
     toStep2Btn.textContent = "Finding route…";
 
-    state.distanceKm = await computeRealDistanceAndDrawMap(state.pickup, state.drop);
+    state.distanceKm = await computeRealDistanceAndDrawMap(state.pickup, state.drop, resolvedPoints.pickup, resolvedPoints.drop);
 
     toStep2Btn.innerHTML = originalLabel;
     toStep2Btn.disabled = false;
@@ -1423,6 +1609,8 @@
   document.getElementById("bookAnother").addEventListener("click", function(){
     pickupInput.value = "";
     dropInput.value = "";
+    resolvedPoints.pickup = null;
+    resolvedPoints.drop = null;
     state = {pickup:"", drop:"", distanceKm:0, etaMins:0, selectedCar:null, paymentMethod:null};
     document.querySelectorAll(".payment-option").forEach(function(el){ el.classList.remove("selected"); });
     routeMapEl.classList.remove("visible");
@@ -1439,6 +1627,8 @@
     // reset trip state
     pickupInput.value = "";
     dropInput.value = "";
+    resolvedPoints.pickup = null;
+    resolvedPoints.drop = null;
     state = {pickup:"", drop:"", distanceKm:0, etaMins:0, selectedCar:null, paymentMethod:null};
     document.querySelectorAll(".payment-option").forEach(function(el){ el.classList.remove("selected"); });
     routeMapEl.classList.remove("visible");
